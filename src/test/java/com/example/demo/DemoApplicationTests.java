@@ -126,6 +126,7 @@ public class DemoApplicationTests {
  */
 
 		//rezervareService.deleteReservareByID(1L);
+//		spectatorRepository.findAll().forEach(x->x.getRezervari().forEach(System.out::println));
 	}
 
 }

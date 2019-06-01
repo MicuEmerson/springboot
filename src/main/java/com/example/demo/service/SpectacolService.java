@@ -27,9 +27,7 @@ public class SpectacolService {
 
     // ~~~~~~~~~~~~~~~~~~~~~     SPECTACOL      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    public List<Spectacol> getAllSpectacole(){
-        return spectacolRepository.findAll();
-    }
+    public List<Spectacol> getAllSpectacole(){ return spectacolRepository.findAll(); }
 
     public Spectacol getSpectacol(Long id){
         return spectacolRepository.findById(id).get();
@@ -45,8 +43,10 @@ public class SpectacolService {
 
     @Transactional
     public Spectacol updateSpectacol(Spectacol spectacol){
-        spectacolRepository.deleteById(spectacol.getId());
-        return spectacolRepository.save(spectacol);
+        Spectacol updatedSpectacol = spectacolRepository.getOne(spectacol.getId());
+        updatedSpectacol.setDenumire(spectacol.getDenumire());
+        updatedSpectacol.setDescriere(spectacol.getDescriere());
+        return updatedSpectacol;
     }
 
     // ~~~~~~~~~~~~~~~~~~~~~     SPECTACOLDATA     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -68,9 +68,11 @@ public class SpectacolService {
     }
 
     @Transactional
-    public SpectacolData updateSpectacol(SpectacolData spectacolData){
-        spectacolDataRepository.deleteById(spectacolData.getId());
-        return spectacolDataRepository.save(spectacolData);
+    public SpectacolData updateSpectacolData(SpectacolData spectacolData){
+        SpectacolData updatedSpectacolData = spectacolDataRepository.getOne(spectacolData.getId());
+        updatedSpectacolData.setData(spectacolData.getData());
+        updatedSpectacolData.setPret(spectacolData.getPret());
+        return updatedSpectacolData;
     }
 
 }

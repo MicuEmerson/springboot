@@ -38,6 +38,10 @@ public class AuthService {
         return spectatorRepository.save(spectator);
     }
 
+    public Spectator getSpectatorById(String id){
+        return spectatorRepository.findById(id).get();
+    }
+
     public void loginSpectator(Spectator spectator) throws Exception {
         Optional<Spectator> optional = spectatorRepository.findById(spectator.getNume());
 

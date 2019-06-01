@@ -16,7 +16,7 @@ import java.util.Set;
 public class SpectacolData extends BaseEntity<Long>{
 
     private Float pret;
-    private Date data;
+    private Long data;
 
     @ManyToOne
     private Spectacol spectacolMapat;

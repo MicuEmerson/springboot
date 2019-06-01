@@ -11,5 +11,5 @@ import java.util.Set;
 public interface SpectacolDataRepository extends JpaRepository<SpectacolData, Long> {
 
     @Query("select s from SpectacolData s where s.data = :date and s.spectacolMapat.id = :id")
-    SpectacolData getSpectacolDataByDate(@Param("date") Date date, @Param("id") Long id);
+    SpectacolData getSpectacolDataByDate(@Param("date") Long date, @Param("id") Long id);
 }

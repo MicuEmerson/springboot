@@ -35,20 +35,20 @@ public class RezervareService {
      * @param idSpectacol id-ul spectacolului
      * @return lista de rezervari care corespunde spectacolului din data respectiva
      */
-    public Set<Rezervare> getReservationsBySpectacolID(Date date, Long idSpectacol){
+    public Set<Rezervare> getReservationsByDateAndSpecId(Long date, Long idSpectacol){
         SpectacolData spectacolData = spectacolDataRepository.getSpectacolDataByDate(date, idSpectacol); // poate da null
         return spectacolData.getRezervari();
     }
 
-    public Set<Rezervare> getReservationBySpectatorID(String spectatorID){
-        return spectatorRepository.findById(spectatorID).get().getRezervari();
+    public Set<Rezervare> getReservationBySpectatorId(String idSpectator){
+        return spectatorRepository.findById(idSpectator).get().getRezervari();
     }
 
     public Rezervare addRezervare(Rezervare rezervare){
         return rezervareRepository.save(rezervare);
     }
 
-    public void deleteReservareByID(Long idRezervare){
+    public void deleteReservareById(Long idRezervare){
         rezervareRepository.deleteById(idRezervare);
     }
 }
