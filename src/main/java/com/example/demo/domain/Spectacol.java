@@ -2,6 +2,7 @@ package com.example.demo.domain;
 
 import lombok.*;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import java.util.Set;
 
@@ -17,6 +18,6 @@ public class Spectacol extends BaseEntity<Long> {
     private String denumire;
     private String descriere;
 
-    @OneToMany(mappedBy = "spectacolMapat")
+    @OneToMany(mappedBy = "spectacolMapat", fetch = FetchType.EAGER, orphanRemoval = true)
     private Set<SpectacolData> spectacolDatas;
 }

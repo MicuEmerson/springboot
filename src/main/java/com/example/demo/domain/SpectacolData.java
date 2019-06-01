@@ -2,10 +2,7 @@ package com.example.demo.domain;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.Date;
 import java.util.Set;
 
@@ -13,8 +10,8 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@EqualsAndHashCode(callSuper = true)
-@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper = true, exclude = {"rezervari"})
+@ToString(callSuper = true, exclude = {"rezervari"})
 @Builder
 public class SpectacolData extends BaseEntity<Long>{
 
@@ -24,6 +21,6 @@ public class SpectacolData extends BaseEntity<Long>{
     @ManyToOne
     private Spectacol spectacolMapat;
 
-    @OneToMany(mappedBy = "spectacolDataMapat")
+    @OneToMany(mappedBy = "spectacolDataMapat", fetch = FetchType.EAGER, orphanRemoval = true)
     private Set<Rezervare> rezervari;
 }

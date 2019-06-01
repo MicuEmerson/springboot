@@ -3,6 +3,7 @@ package com.example.demo.domain;
 import lombok.*;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import java.util.Set;
@@ -11,8 +12,8 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@EqualsAndHashCode
-@ToString
+@EqualsAndHashCode(exclude = {"rezervari"})
+@ToString(exclude = {"rezervari"})
 @Builder
 public class Spectator {
 
@@ -20,6 +21,6 @@ public class Spectator {
     private String nume;
     private String password;
 
-    @OneToMany(mappedBy = "spectatorMapat")
+    @OneToMany(mappedBy = "spectatorMapat", fetch = FetchType.EAGER, orphanRemoval = true)
     private Set<Rezervare> rezervari;
 }
