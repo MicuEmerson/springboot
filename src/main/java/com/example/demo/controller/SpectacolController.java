@@ -14,9 +14,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @RequestMapping("/spec")
 @RestController
+@CrossOrigin
 public class SpectacolController {
 
     private SpectacolService spectacolService;
@@ -107,7 +109,14 @@ public class SpectacolController {
 
     @GetMapping(value = "/spectacolDataLast")
     public ResponseEntity<Long> getLastSpectacolData(){
-        Long timp = spectacolService.getLastSpectacolData().iterator().next().getData();
+        Set<SpectacolData> list = spectacolService.getLastSpectacolData();
+        Long timp = 0L;
+
+        if(list.size() == 0){
+            return new ResponseEntity<>(timp, HttpStatus.OK);
+        }
+
+        timp = spectacolService.getLastSpectacolData().iterator().next().getData();
         return new ResponseEntity<>(timp, HttpStatus.OK);
     }
 

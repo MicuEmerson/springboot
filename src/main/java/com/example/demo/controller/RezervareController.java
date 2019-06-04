@@ -23,6 +23,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @RequestMapping("/rez")
 @RestController
+@CrossOrigin
 public class RezervareController {
     private RezervareService rezervareService;
     private SpectacolService spectacolService;
@@ -89,16 +90,21 @@ public class RezervareController {
                 .spectatorMapat(spectator)
                 .build());
 
-        ////// trimitem la fiecare SseEmitter care apartine SpectacolData-ului cu id-ul dat, mesajul de rezervare noua
-        if(sseEmitters.containsKey(idSpectacolData)) {
-            List<SseEmitter> list = sseEmitters.get(idSpectacolData);
-            try {
-                for(SseEmitter sseEmitter : list){
-                    sseEmitter.send(rezervareDtoConverter(rezervare), MediaType.APPLICATION_JSON);
+        try {
+            ////// trimitem la fiecare SseEmitter care apartine SpectacolData-ului cu id-ul dat, mesajul de rezervare noua
+            if (sseEmitters.containsKey(idSpectacolData)) {
+                List<SseEmitter> list = sseEmitters.get(idSpectacolData);
+                try {
+                    for (SseEmitter sseEmitter : list) {
+                        sseEmitter.send(rezervareDtoConverter(rezervare), MediaType.APPLICATION_JSON);
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
             }
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
         }
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -127,6 +133,16 @@ public class RezervareController {
 
         SseEmitter sseEmitter = new SseEmitter(60 * 10000L); // timeout dupa 10minute
         sseEmitters.get(id).add(sseEmitter);
+
+        sseEmitter.onCompletion(()->{
+            sseEmitters.get(id).remove(sseEmitter);
+        });
+        sseEmitter.onTimeout(()->{
+            sseEmitters.get(id).remove(sseEmitter);
+        });
+        sseEmitter.onError((x)->{
+            sseEmitters.get(id).remove(sseEmitter);
+        });
 
         return sseEmitter;
     }
