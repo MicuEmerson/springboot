@@ -75,4 +75,8 @@ public class SpectacolService {
         return updatedSpectacolData;
     }
 
+    public Set<SpectacolData> getLastSpectacolData(){
+        return spectacolDataRepository.getLastSpectacolData();
+    }
+
 }

@@ -12,4 +12,7 @@ public interface SpectacolDataRepository extends JpaRepository<SpectacolData, Lo
 
     @Query("select s from SpectacolData s where s.data = :date and s.spectacolMapat.id = :id")
     SpectacolData getSpectacolDataByDate(@Param("date") Long date, @Param("id") Long id);
+
+    @Query("select s from SpectacolData s order by s.data desc")
+    Set<SpectacolData> getLastSpectacolData();
 }

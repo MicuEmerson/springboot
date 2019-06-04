@@ -105,6 +105,12 @@ public class SpectacolController {
         return new ResponseEntity<>(spectacolDataDtoConverter(spectacolData), HttpStatus.OK);
     }
 
+    @GetMapping(value = "/spectacolDataLast")
+    public ResponseEntity<Long> getLastSpectacolData(){
+        Long timp = spectacolService.getLastSpectacolData().iterator().next().getData();
+        return new ResponseEntity<>(timp, HttpStatus.OK);
+    }
+
     @PostMapping(value = "/spectacolData")
     public ResponseEntity<SpectacolDataDto> addSpectacolData(@RequestBody ObjectNode objectNode){
 

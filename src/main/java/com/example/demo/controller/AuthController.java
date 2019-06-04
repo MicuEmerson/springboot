@@ -61,7 +61,6 @@ public class AuthController {
     public ResponseEntity<String> signUp(@RequestBody ObjectNode objectNode) {
         String username = objectNode.get("username").asText();
         String password = objectNode.get("password").asText();
-//        String rePassword = objectNode.get("rePassword").asText();
 
         authService.signUpSpectator(Spectator.builder()
                 .nume(username)
